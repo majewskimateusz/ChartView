@@ -61,8 +61,6 @@ public struct LineChartView: View {
                 .frame(width: frame.width, height: 240, alignment: .center)
                 .shadow(color: self.style.dropShadowColor, radius: self.dropShadow ? 8 : 0)
             VStack(alignment: .leading){
-                
-                
                 if(!self.showIndicatorDot){
                     VStack(alignment: .leading, spacing: 8){
                         Text(self.title)
@@ -78,7 +76,7 @@ public struct LineChartView: View {
                             
                             if let rateValue = self.rateValue
                             {
-                                if (rateValue ?? 0 >= 0){
+                                if (rateValue >= 0){
                                     Image(systemName: "arrow.up")
                                 }else{
                                     Image(systemName: "arrow.down")
@@ -107,26 +105,26 @@ public struct LineChartView: View {
                          touchLocation: self.$touchLocation,
                          showIndicator: self.$showIndicatorDot,
                          minDataValue: .constant(nil),
-                         maxDataValue: .constant(nil)
+                         maxDataValue: .constant(10)
                     )
                 }
                 .frame(width: frame.width, height: frame.height)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .offset(x: 0, y: 0)
+                .gesture(DragGesture()
+                            .onChanged({ value in
+                    self.touchLocation = value.location
+                    self.showIndicatorDot = true
+                    self.getClosestDataPoint(toPoint: value.location, width:self.frame.width, height: self.frame.height)
+                })
+                            .onEnded({ value in
+                    self.showIndicatorDot = false
+                })
+                )
+                
+                
             }.frame(width: self.formSize.width, height: self.formSize.height)
-            
-            
         }
-        .gesture(DragGesture()
-        .onChanged({ value in
-            self.touchLocation = value.location
-            self.showIndicatorDot = true
-            self.getClosestDataPoint(toPoint: value.location, width:self.frame.width, height: self.frame.height)
-        })
-            .onEnded({ value in
-                self.showIndicatorDot = false
-            })
-        )
     }
     
     @discardableResult func getClosestDataPoint(toPoint: CGPoint, width:CGFloat, height: CGFloat) -> CGPoint {
