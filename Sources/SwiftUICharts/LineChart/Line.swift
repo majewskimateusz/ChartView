@@ -9,6 +9,7 @@
 import SwiftUI
 
 public struct Line: View {
+    var colorOfShadow: Color
     @ObservedObject var data: ChartData
     @Binding var frame: CGRect
     @Binding var touchLocation: CGPoint
@@ -17,7 +18,14 @@ public struct Line: View {
     @Binding var maxDataValue: Double?
     @State private var showFull: Bool = false
     @State var showBackground: Bool = true
-    var gradient: GradientColor = GradientColor(start: .green, end: .green)
+    
+    
+    var gradient: GradientColor
+    {
+        GradientColor(start: colorOfShadow, end: colorOfShadow)
+    }
+    
+    
     var index:Int = 0
     let padding:CGFloat = 30
     var curvedLines: Bool = true
@@ -63,7 +71,7 @@ public struct Line: View {
             if(self.showFull && self.showBackground){
                 self.closedPath
                     //.fill(LinearGradient(gradient: Gradient(colors: [.gray, Color(UIColor.systemBackground) ]), startPoint: .bottom, endPoint: .top))
-                    .fill(LinearGradient(gradient: Gradient(colors: [.green, Color(UIColor.systemBackground) ]), startPoint: .bottom, endPoint: .top))
+                    .fill(LinearGradient(gradient: Gradient(colors: [colorOfShadow, Color(UIColor.systemBackground) ]), startPoint: .bottom, endPoint: .top))
                     .rotationEffect(.degrees(180), anchor: .center)
                     .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
                     .transition(.opacity)
@@ -96,12 +104,4 @@ public struct Line: View {
         return closest
     }
     
-}
-
-struct Line_Previews: PreviewProvider {
-    static var previews: some View {
-        GeometryReader{ geometry in
-            Line(data: ChartData(points: [12,-230,10,54]), frame: .constant(geometry.frame(in: .local)), touchLocation: .constant(CGPoint(x: 100, y: 12)), showIndicator: .constant(true), minDataValue: .constant(nil), maxDataValue: .constant(nil))
-        }.frame(width: 320, height: 160)
-    }
 }

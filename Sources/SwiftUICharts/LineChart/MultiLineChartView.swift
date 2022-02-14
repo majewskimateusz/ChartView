@@ -111,14 +111,14 @@ public struct MultiLineChartView: View {
                 GeometryReader{ geometry in
                     ZStack{
                         ForEach(0..<self.data.count, id: \.self) { i in
-                            Line(data: self.data[i],
+                            Line(colorOfShadow: Color(.green), data: self.data[i],
                                  frame: .constant(geometry.frame(in: .local)),
                                  touchLocation: self.$touchLocation,
                                  showIndicator: self.$showIndicatorDot,
                                  minDataValue: .constant(self.globalMin),
                                  maxDataValue: .constant(self.globalMax),
                                  showBackground: false,
-                                 gradient: self.data[i].getGradient(),
+                                 //gradient: self.data[i].getGradient(),
                                  index: i)
                         }
                     }

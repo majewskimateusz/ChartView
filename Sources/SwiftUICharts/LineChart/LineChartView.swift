@@ -20,6 +20,8 @@ public struct LineChartView: View {
     public var dropShadow: Bool
     public var valueSpecifier:String
     
+    var colorOfShadow: Color
+    
     @State private var touchLocation:CGPoint = .zero
     @State private var showIndicatorDot: Bool = false
     @State private var currentValue: Double = 2 {
@@ -33,7 +35,9 @@ public struct LineChartView: View {
     var frame = CGSize(width: 180, height: 120)
     private var rateValue: Int?
     
-    public init(data: [Double],
+    public init(
+        colorOfShadow: Color,
+        data: [Double],
                 title: String,
                 legend: String? = nil,
                 style: ChartStyle = Styles.lineChartStyleOne,
@@ -52,6 +56,7 @@ public struct LineChartView: View {
         self.dropShadow = dropShadow!
         self.valueSpecifier = valueSpecifier!
         self.rateValue = rateValue
+        self.colorOfShadow = colorOfShadow
     }
     
     public var body: some View {
@@ -100,7 +105,7 @@ public struct LineChartView: View {
                 }
                 Spacer()
                 GeometryReader{ geometry in
-                    Line(data: self.data,
+                    Line(colorOfShadow: colorOfShadow, data: self.data,
                          frame: .constant(geometry.frame(in: .local)),
                          touchLocation: self.$touchLocation,
                          showIndicator: self.$showIndicatorDot,
