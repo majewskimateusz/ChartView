@@ -61,6 +61,8 @@ public struct LineChartView: View {
                 .frame(width: frame.width, height: 240, alignment: .center)
                 .shadow(color: self.style.dropShadowColor, radius: self.dropShadow ? 8 : 0)
             VStack(alignment: .leading){
+                
+                
                 if(!self.showIndicatorDot){
                     VStack(alignment: .leading, spacing: 8){
                         Text(self.title)
@@ -81,7 +83,7 @@ public struct LineChartView: View {
                                 }else{
                                     Image(systemName: "arrow.down")
                                 }
-                                Text("\(rateValue!)%")
+                                Text("\(rateValue)%")
                             }
                         }
                     }
@@ -112,6 +114,8 @@ public struct LineChartView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .offset(x: 0, y: 0)
             }.frame(width: self.formSize.width, height: self.formSize.height)
+            
+            
         }
         .gesture(DragGesture()
         .onChanged({ value in
@@ -139,14 +143,3 @@ public struct LineChartView: View {
     }
 }
 
-struct WidgetView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            LineChartView(data: [8,23,54,32,12,37,7,23,43], title: "Line chart", legend: "Basic")
-                .environment(\.colorScheme, .light)
-            
-            LineChartView(data: [282.502, 284.495, 283.51, 285.019, 285.197, 286.118, 288.737, 288.455, 289.391, 287.691, 285.878, 286.46, 286.252, 284.652, 284.129, 284.188], title: "Line chart", legend: "Basic")
-            .environment(\.colorScheme, .light)
-        }
-    }
-}
