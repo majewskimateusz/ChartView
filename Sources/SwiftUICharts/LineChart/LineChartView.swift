@@ -65,6 +65,7 @@ public struct LineChartView: View {
                 .fill(self.colorScheme == .dark ? self.darkModeStyle.backgroundColor : self.style.backgroundColor)
                 .frame(width: frame.width, height: 240, alignment: .center)
                 .shadow(color: self.style.dropShadowColor, radius: self.dropShadow ? 8 : 0)
+            
             VStack(alignment: .leading){
                 if(!self.showIndicatorDot){
                     VStack(alignment: .leading, spacing: 8){
@@ -112,6 +113,7 @@ public struct LineChartView: View {
                          minDataValue: .constant(nil),
                          maxDataValue: .constant(10)
                     )
+                        .padding(.bottom, 3)
                 }
                 .frame(width: frame.width, height: frame.height)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
@@ -128,7 +130,9 @@ public struct LineChartView: View {
                 )
                 
                 
-            }.frame(width: self.formSize.width, height: self.formSize.height)
+            }
+            
+            .frame(width: self.formSize.width, height: self.formSize.height)
         }
     }
     
